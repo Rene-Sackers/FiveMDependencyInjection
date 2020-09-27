@@ -4,12 +4,16 @@ $nugetExePath = ".\nuget.exe"
 $projects =
     "../src/FiveMDependencyInjection/FiveMDependencyInjection.csproj"
 
+Remove-Item -Path ".\packed\" -Recurse
+
 foreach ($project in $projects) {
-    $argumentList = "pack ""$project"" -Version $version -OutputDirectory .\packed -Build -Symbols"
+    $argumentList = "pack ""$project"" -Version $version -OutputDirectory .\packed -Build"
     
     Invoke-Expression "& $nugetExePath $argumentList"
 }
 
 $localNugetPath = $env:LocalNugetPath
-Copy-Item -Path ".\packed\*" -Destination "$localNugetPath"
-Remove-Item -Path ".\packed\" -Recurse
+if (-not ($null -eq $localNugetPath))
+{
+	Copy-Item -Path ".\packed\*" -Destination "$localNugetPath"
+}

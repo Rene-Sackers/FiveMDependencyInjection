@@ -1,0 +1,10 @@
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>René Sackers</authors>
+    <repository type="git" url="https://github.com/Rene-Sackers/FiveMDependencyInjection.git" />
+	<projectUrl>https://github.com/Rene-Sackers/FiveMDependencyInjection</projectUrl>
+    <description>A client-side dependency injection framework for FiveM</description>
+  </metadata>
+</package>
