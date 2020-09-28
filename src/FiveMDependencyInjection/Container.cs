@@ -15,29 +15,32 @@ namespace FiveMDependencyInjection
 			_registrations = registrations;
 		}
 
-		private object ResolveSingleInstance(Type type)
+		private object ResolveSingleInstance(Registration registration)
 		{
-			var assemblyQualifiedName = type.AssemblyQualifiedName;
+			var assemblyQualifiedName = registration.InstanceType.AssemblyQualifiedName;
 
 			if (_instances.ContainsKey(assemblyQualifiedName))
 			{
 				return _instances[assemblyQualifiedName];
 			}
 
-			var instance = CreateInstance(type);
+			var instance = CreateInstance(registration);
 			_instances.Add(assemblyQualifiedName, instance);
 
 			return instance;
 		}
 
-		private object CreateInstance(Type type)
+		private object CreateInstance(Registration registration)
 		{
-			LogHelper.Log($"Create instance: {type}");
+			LogHelper.Log($"Create instance: {registration.InstanceType}");
 
-			var constructor = type.GetConstructors().FirstOrDefault();
+			if (registration.Factory != null)
+				return registration.Factory();
+
+			var constructor = registration.InstanceType.GetConstructors().FirstOrDefault();
 			var parameters = constructor.GetParameters().Select(ResolveConstructorParameter).ToArray();
 
-			var instance = Activator.CreateInstance(type, parameters);
+			var instance = Activator.CreateInstance(registration.InstanceType, parameters);
 			
 			return instance;
 		}
@@ -78,9 +81,9 @@ namespace FiveMDependencyInjection
 				throw new Exception("Could not resolve type " + type.AssemblyQualifiedName);
 
 			if (matchingRegistration.SingleInstance)
-				return ResolveSingleInstance(matchingRegistration.InstanceType);
+				return ResolveSingleInstance(matchingRegistration);
 
-			return CreateInstance(matchingRegistration.InstanceType);
+			return CreateInstance(matchingRegistration);
 		}
 
 		public T Resolve<T>()

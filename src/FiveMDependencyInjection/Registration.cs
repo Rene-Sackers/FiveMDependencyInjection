@@ -19,5 +19,7 @@ namespace FiveMDependencyInjection
 		internal List<Type> Types { get; } = new List<Type>();
 
 		internal bool SingleInstance { get; set; }
+
+		internal Func<object> Factory { get; set; }
 	}
 }
