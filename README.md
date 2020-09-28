@@ -64,3 +64,9 @@ It will at least tell you what it's trying to resolve.
 ## Implementing
 
 Make sure you copy the `FiveMDependencyInjection.dll` to your resource and add it to `client_scripts` in `fxmanifest.lua`.
+
+## NuGet feed
+
+```
+https://nuget.pkg.github.com/Rene-Sackers/index.json
+```
