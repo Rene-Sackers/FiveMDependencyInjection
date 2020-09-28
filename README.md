@@ -9,11 +9,18 @@ I did the absolute bare minimum to get a "working" framework.
 ```csharp
 var builder = new ContainerBuilder();
 
+// Single instance & "As" registration
 // Registers ChatService as a single instance (singleton). Can be resolved in constructors as ChatService or IChatService
 builder
 	.RegisterType<ChatService>()
 	.SingleInstance()
 	.As<IChatService>();
+
+// Factory registration
+// Registers the EventHandlerDictionary of the current BaseScript so you can access it elsewhere using DI
+builder
+	.Register(() => EventHandlers)
+	.As<EventHandlerDictionary>();
 
 var container = builder.Build();
 ```
