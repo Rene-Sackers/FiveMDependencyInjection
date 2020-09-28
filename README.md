@@ -4,6 +4,9 @@ Well, this is a first. A GTA multiplayer mod that has enough freedom in the clie
 
 I did the absolute bare minimum to get a "working" framework.
 
+NuGet:  
+[FiveMDependencyInjection](https://www.nuget.org/packages/FiveMDependencyInjection/)
+
 ## Example
 
 ```csharp
